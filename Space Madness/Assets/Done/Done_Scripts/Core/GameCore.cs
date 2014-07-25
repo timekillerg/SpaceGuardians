@@ -35,8 +35,10 @@ namespace AssemblyCSharp
                     return 1;
                 else if (PlayingTime < 240)
                     return 2;
-                else 
+                else if (PlayingTime < 420)
                     return 3;
+                else 
+                    return 4;
             }
         }
 

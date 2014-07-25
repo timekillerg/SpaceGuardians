@@ -3,19 +3,30 @@ using System.Collections;
 
 public class Done_BGScroller : MonoBehaviour
 {
-	public float scrollSpeed;
-	public float tileSizeZ;
+    public float scrollSpeed;
 
-	private Vector3 startPosition;
+    private float _startTime;
+    private float _timeInPlay;
+    private float endXPosition;
 
-	void Start ()
-	{
-		startPosition = transform.position;
-	}
+    void Awake()
+    {
+        _startTime = Time.time; 
+        _timeInPlay = 0.001f;
+        endXPosition = transform.position.z - transform.localScale.y+25;
+    }
 
-	void Update ()
-	{
-		float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeZ);
-		transform.position = startPosition + Vector3.forward * newPosition;
-	}
+    void Start()
+    {
+        _startTime = Time.time;
+        _timeInPlay = 0.001f;
+        endXPosition = 0;
+    }
+
+    void Update()
+    {
+        _timeInPlay = Time.time - _startTime;
+        if (transform.position.z > endXPosition)
+            transform.position = transform.position + Vector3.forward * Time.deltaTime * scrollSpeed / (_timeInPlay <= 60 ? 1 : _timeInPlay / 60);
+    }
 }

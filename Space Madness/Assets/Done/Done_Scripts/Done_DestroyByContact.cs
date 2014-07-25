@@ -19,12 +19,11 @@ public class Done_DestroyByContact : MonoBehaviour
 
     public GameObject[] bonuses;
 
-    private int CountOfShots = 1;
+    public int CountOfShots = 1;
 
     void Start()
     {
-        if (this.name.StartsWith("Asteroid_ice_0") || this.CompareTag("EnemyShip"))
-            CountOfShots = 2;
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -47,17 +46,21 @@ public class Done_DestroyByContact : MonoBehaviour
             {
                 Instantiate(explosion, transform.position, transform.rotation);
                 InstantiateBonus();
-            }            
+            }
         }
 
         if (other.CompareTag("Player") && !AppCore.IsGodMod)
         {
-            if (this.CompareTag("Meteor") || this.CompareTag("EnemyShip"))
+            if (this.CompareTag("EnemyShip") && this.name.StartsWith("Big Enemy Ship"))
+            {
+                GameCore.Health = GameCore.Health - 100;
+            }
+            else if (this.CompareTag("Meteor") || this.CompareTag("EnemyShip"))
             {
                 GameCore.Health = GameCore.Health - 20;
                 Instantiate(minus20, minusInitalPosition, new Quaternion(0, 180, 0, 0));
             }
-            if (this.CompareTag("EnemyBolt"))
+            else if (this.CompareTag("EnemyBolt"))
             {
                 GameCore.Health = GameCore.Health - 10;
                 Instantiate(minus10, minusInitalPosition, new Quaternion(0, 180, 0, 0));

@@ -15,6 +15,7 @@ public class Done_GameController : MonoBehaviour
     public GameObject[] hazard1;
     public GameObject[] hazard2;
     public GameObject[] hazard3;
+    public GameObject[] hazard4;
 
     public GameObject countdown;
     public GameObject gameOverButtons;
@@ -98,13 +99,16 @@ public class Done_GameController : MonoBehaviour
         }
     }
 
-    private void ChangeHazards() {
+    private void ChangeHazards()
+    {
         if (GameCore.AsteroidType == 1 && hazards != hazard1)
             hazards = hazard1;
         else if (GameCore.AsteroidType == 2 && hazards != hazard2)
             hazards = hazard2;
         else if (GameCore.AsteroidType == 3 && hazards != hazard3)
             hazards = hazard3;
+        else if (GameCore.AsteroidType == 4 && hazards != hazard4)
+            hazards = hazard4;
     }
 
     void Update()
@@ -142,6 +146,32 @@ public class Done_GameController : MonoBehaviour
         }
     }
 
+    void ChangeWaveHazardCount()
+    {
+        switch (GameCore.AsteroidType)
+        {
+            case 1:
+                hazardCount = 8;
+                break;
+            case 2:
+                hazardCount = 12;
+                spawnWait = spawnWait * 1.1f;
+                break;
+            case 3:
+                hazardCount = 16;
+                spawnWait = spawnWait * 1.2f;
+                break;
+            case 4:
+                hazardCount = 22;
+                spawnWait = spawnWait * 1.3f;
+                break;
+            default:
+                hazardCount = 8;
+                spawnWait = 1;
+                break;
+        }
+    }
+
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
@@ -150,6 +180,9 @@ public class Done_GameController : MonoBehaviour
             for (int i = 0; i < hazardCount; i++)
             {
                 GameObject hazard = hazards[Random.Range(0, hazards.Length)];
+                if (hazard.name == "Big Enemy Ship")
+                    if (Random.Range(0, 2) != 1)
+                        hazard = hazards[0];
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
 

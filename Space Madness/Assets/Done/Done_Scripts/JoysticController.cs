@@ -12,63 +12,69 @@ public class JoysticController : MonoBehaviour
 
     public float PlayerSpeed;
     public float JoysticSpeed;
-    public float JoyTrip;
-    public float JoyTripMultiplier;
     public float PlayerTilt;
 
     private float vector;
-    private readonly Vector3 TRIP = new Vector3(6, 0, 0);
+
     private Vector3 JoyPosition;
+    private Vector3 PlayerPosition;
 
     void Start()
     {
         JoyPosition = joysticGameObject.transform.position;
+        PlayerPosition = playerGameObject.transform.position;
     }
 
     void Update()
     {
         if (playerGameObject != null)
         {
-            playerGameObject.rigidbody.rotation = Quaternion.Euler(270 - vector * PlayerTilt, 270, 0.0f);
-            if (vector != 0)
-                playerGameObject.transform.position = Vector3.MoveTowards(playerGameObject.transform.position,
-                    TRIP * Math.Abs(vector) / vector,
-                    PlayerSpeed * Time.deltaTime * Math.Abs(vector));
+            if (PlayerPosition.x != 0)
+            {
+                playerGameObject.rigidbody.rotation = Quaternion.Euler(270 + (playerGameObject.transform.position.x - PlayerPosition.x) * PlayerTilt, 270, 0.0f);
+                playerGameObject.transform.position = Vector3.Lerp(playerGameObject.transform.position,
+                    PlayerPosition, Time.deltaTime * PlayerSpeed);
+            }
+            else
+            {
+                playerGameObject.rigidbody.rotation = Quaternion.Euler(270, 270, 0.0f);
+            }
         }
 
-        JoyPosition.x = vector * JoyTrip * JoyTripMultiplier;
-        if (Math.Abs(JoyPosition.x) > JoyTrip)
-            JoyPosition.x = JoyTrip * Math.Abs(JoyPosition.x) / JoyPosition.x;
-        if (JoyPosition != joysticGameObject.transform.position)
-            joysticGameObject.transform.position = Vector3.Lerp(joysticGameObject.transform.position, JoyPosition, JoysticSpeed * Time.deltaTime);
+        if (joysticGameObject != null)
+        {
+            JoyPosition.x = PlayerPosition.x * 0.80f;
+            joysticGameObject.transform.position = Vector3.Lerp(joysticGameObject.transform.position,
+                JoyPosition, Time.deltaTime * JoysticSpeed);
+        }
     }
 
     void OnMouseDown()
     {
-        SetVector(Input.mousePosition.x);
+        PlayerPosition.x = GetMousePositionAbsolute().x;
         ChangeJoySprite(joyPressSprite);
     }
 
     void OnMouseUp()
     {
-        ChangeJoySprite(joyStartSprite);
-        vector = 0;
+        PlayerPosition.x = 0;
     }
 
     void OnMouseDrag()
     {
-        SetVector(Input.mousePosition.x);
-    }
-
-    private void SetVector(float v3x)
-    {
-        vector = (v3x - Screen.width / 2) * 4 / Screen.width;
-        if (Mathf.Abs(vector) > 1) vector = 1 * Mathf.Abs(vector) / vector;
+        PlayerPosition.x = GetMousePositionAbsolute().x;
     }
 
     private void ChangeJoySprite(Sprite expSprite)
     {
         if (((SpriteRenderer)joysticGameObject.GetComponent("SpriteRenderer")).sprite != expSprite)
             ((SpriteRenderer)joysticGameObject.GetComponent("SpriteRenderer")).sprite = expSprite;
+    }
+
+    private Vector3 GetMousePositionAbsolute()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        return (Physics.Raycast(ray, out hit, 100)) ? hit.point : Vector3.zero;
     }
 }
