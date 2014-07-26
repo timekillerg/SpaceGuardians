@@ -21,12 +21,12 @@ public class LevelButtonPressListener : MonoBehaviour {
 
         LoadStarsOnScreen(countOfStars);
 
-        if (countOfStars > 0)
-            isLevelAvailable = true;
-        if ((countOfStars == 0) && (levelName == "Down Level 1" || levelName == "Sun Level 1" || levelName == "Ice Level 1" || levelName == "Meteor Level 1"))
-            isLevelAvailable = true;
-        if ((countOfStars == 0) && !isLevelAvailable)
-            CheckIsPreviousLevelOpened();
+        //if (countOfStars > 0)
+        //    isLevelAvailable = true;
+        //if ((countOfStars == 0) && (levelName == "Down Level 1" || levelName == "Sun Level 1" || levelName == "Ice Level 1" || levelName == "Meteor Level 1"))
+        //    isLevelAvailable = true;
+        //if ((countOfStars == 0) && !isLevelAvailable)
+        //    CheckIsPreviousLevelOpened();
 		SetSprite (false);
 	}
 

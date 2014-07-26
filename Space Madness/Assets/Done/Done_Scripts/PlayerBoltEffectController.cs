@@ -12,7 +12,7 @@ public class PlayerBoltEffectController : MonoBehaviour
     void Update() { }
     void OnTriggerEnter(Collider other)
     {
-        if (other.name.StartsWith("Asteroid_Ice_0") || other.CompareTag("EnemyShip"))
+        if (other.CompareTag("Meteor") || other.CompareTag("EnemyShip"))
             if (boltExmplosion != null)
             {
                 Instantiate(boltExmplosion, transform.position, transform.rotation);

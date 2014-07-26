@@ -23,7 +23,7 @@ namespace AssemblyCSharp
         {
             get
             {
-                return 1 + PlayingTime / 300;
+                return 1 + PlayingTime / 600;
             }
         }
 
@@ -35,7 +35,7 @@ namespace AssemblyCSharp
                     return 1;
                 else if (PlayingTime < 240)
                     return 2;
-                else if (PlayingTime < 420)
+                else if (PlayingTime < 360)
                     return 3;
                 else 
                     return 4;

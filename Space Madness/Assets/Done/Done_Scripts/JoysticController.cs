@@ -43,7 +43,7 @@ public class JoysticController : MonoBehaviour
 
         if (joysticGameObject != null)
         {
-            JoyPosition.x = PlayerPosition.x * 0.80f;
+            JoyPosition.x = PlayerPosition.x * 0.75f;
             joysticGameObject.transform.position = Vector3.Lerp(joysticGameObject.transform.position,
                 JoyPosition, Time.deltaTime * JoysticSpeed);
         }
