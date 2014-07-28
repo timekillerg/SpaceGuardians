@@ -6,7 +6,7 @@ public class ExplosionController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("EnemyShip"))
+        if (other.CompareTag("EnemyShip") || other.CompareTag("Meteor"))
             Instantiate(explosionObject, transform.position, transform.rotation);
     }
 }
