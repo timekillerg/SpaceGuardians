@@ -12,6 +12,7 @@ public class AudioPlayer : MonoBehaviour
 
     void Start()
     {
+        AudioClip[] clips = { music_bg_meteor, music_bg_ice, music_bg_down, music_bg_sun, music_bg_fast_game };
         if (AppCore.CurrentStatus != AppCore.Status.FAST_GAME)
         {            
             switch (GameCore.mapType)
@@ -30,8 +31,10 @@ public class AudioPlayer : MonoBehaviour
                     break;
             }
         }
-        else
-            this.audio.clip = music_bg_fast_game;
+        else {
+            var clip = clips[UnityEngine.Random.Range(0, clips.Length)];
+            this.audio.clip = clip;
+        }
         this.audio.mute = false;
         this.audio.Play();
     }

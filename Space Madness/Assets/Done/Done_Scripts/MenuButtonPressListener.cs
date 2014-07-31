@@ -9,9 +9,6 @@ public class MenuButtonPressListener : MonoBehaviour
     public Sprite pressedSprite;
     private Sprite notPressedSprite;
 
-    public GameObject BigBanner;
-    private bool _isBannerShown = false;
-
     void Start()
     {
         notPressedSprite = ((SpriteRenderer)renderer).sprite;
@@ -62,7 +59,8 @@ public class MenuButtonPressListener : MonoBehaviour
                 AppCore.CurrentStatus = AppCore.Status.FAST_GAME;
                 break;
             case "ExitGameButton":
-                ShowBigBanner();
+                AppCore.CurrentStatus = AppCore.Status.EXIT;
+                AppCore.Load();
                 break;
             case "HistoryButton":
                 AppCore.CurrentStatus = AppCore.Status.MAPS;
@@ -82,26 +80,6 @@ public class MenuButtonPressListener : MonoBehaviour
             case "MeteorMapButton":
                 AppCore.CurrentStatus = AppCore.Status.LEVELS_METEOR;
                 break;
-        }
-    }
-
-    void Update()
-    {
-        if (_isBannerShown && GameObject.FindGameObjectsWithTag("PromotionBig").Length == 0)
-        {
-            AppCore.CurrentStatus = AppCore.Status.EXIT;
-            AppCore.Load();
-        }
-    }
-
-    void ShowBigBanner()
-    {
-        if (BigBanner != null)
-        {
-            Destroy(GameObject.FindGameObjectWithTag("PromotionSmall"));
-            var banner = Instantiate(BigBanner, Vector3.zero, Quaternion.identity);
-            _isBannerShown = true;
-            Destroy(banner, 3);
         }
     }
 }
