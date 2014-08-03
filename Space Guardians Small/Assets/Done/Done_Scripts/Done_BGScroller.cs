@@ -13,14 +13,13 @@ public class Done_BGScroller : MonoBehaviour
     {
         _startTime = Time.time; 
         _timeInPlay = 0.001f;
-        endXPosition = transform.position.z - transform.localScale.y+25;
     }
 
     void Start()
     {
         _startTime = Time.time;
         _timeInPlay = 0.001f;
-        endXPosition = 0;
+        endXPosition = transform.position.z - transform.localScale.y + 25;
     }
 
     void Update()

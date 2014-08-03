@@ -16,8 +16,7 @@ public class MenuButtonPressListener : MonoBehaviour
 
     void OnMouseDown()
     {
-        if ((GameObject.Find("Screen Main Menu").transform.position.x >= -3 && GameObject.Find("Screen Main Menu").transform.position.x <= 3)
-            || (GameObject.Find("Screen Maps").transform.position.x >= -3 && GameObject.Find("Screen Maps").transform.position.x <= 3))
+        if ((GameObject.Find("Screen Main Menu").transform.position.x >= -3 && GameObject.Find("Screen Main Menu").transform.position.x <= 3))
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -35,8 +34,7 @@ public class MenuButtonPressListener : MonoBehaviour
     void OnMouseUp()
     {
         ((SpriteRenderer)renderer).sprite = notPressedSprite;
-        if ((GameObject.Find("Screen Main Menu").transform.position.x >= -3 && GameObject.Find("Screen Main Menu").transform.position.x <= 3)
-            || (GameObject.Find("Screen Maps").transform.position.x >= -3 && GameObject.Find("Screen Maps").transform.position.x <= 3))
+        if ((GameObject.Find("Screen Main Menu").transform.position.x >= -3 && GameObject.Find("Screen Main Menu").transform.position.x <= 3))
             if (Input.GetMouseButtonUp(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
